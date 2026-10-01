@@ -121,3 +121,13 @@ Puedes corregir visitas y anular cobros o gastos mientras la ruta esté abierta.
 ## Dependencias
 
 ExcelJS genera los archivos Excel con imágenes; Lucide aporta los iconos y esbuild prepara el JavaScript para el navegador. Se incluyen las versiones en `package-lock.json` y las licencias principales en `LICENSES.txt`.
+
+## Productos y puntos de entrega
+
+Al iniciar o recargar una ruta, cuenta las fundas de quinoa de sal, dulce, chocolate, leche y galletas por separado. Cada línea de venta tiene su tipo y precio. Cortesías, nuevas por cambio y caducadas retiradas se anotan por tipo, independientemente. El cierre pide un conteo físico por tipo y explica diferencias aunque el total general coincida. Los registros antiguos se conservan como «Sin clasificar».
+
+«Registrar entrega aquí» solicita la ubicación del celular. Elige una tienda existente o guarda un nuevo punto, con nombre opcional. Revisa la precisión del GPS y ajusta el pin en el mapa antes de guardar. No se registra ubicación en segundo plano. La sección Mapa permite filtrar una fecha o ver todas las entregas; cada pin abre su detalle y un enlace a Google Maps.
+
+El GPS requiere HTTPS (GitHub Pages) o localhost y permiso del navegador. Sin permiso puedes elegir una tienda. Los formularios, fotos, cantidades y coordenadas se guardan localmente y funcionan sin conexión después de preparar la app; el mapa de calles necesita internet. Leaflet 1.9.4 se carga desde unpkg con integridad SRI únicamente al abrir un mapa. Los mapas usan OpenStreetMap con atribución visible y sin descarga masiva ni caché de mapas en el service worker.
+
+El Excel añade Entregas por tipo, Inventario por tipo y coordenadas/enlaces de ubicación en Visitas. Las copias JSON incluyen también productos y ubicaciones y aceptan copias de la versión anterior.
