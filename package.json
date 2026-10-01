@@ -1,0 +1,27 @@
+{
+  "name": "quinua-ruta",
+  "version": "1.0.0",
+  "description": "App instalable para control de rutas de pan de quinua, fotos y Excel.",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tests.mjs && node ui-check.mjs && node sw-check.mjs",
+    "start": "node serve.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "esbuild": "^0.28.2",
+    "exceljs": "^4.4.0",
+    "lucide": "^1.49.0"
+  },
+  "devDependencies": {
+    "fake-indexeddb": "^6.2.5",
+    "jsdom": "^30.1.1"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  }
+}
