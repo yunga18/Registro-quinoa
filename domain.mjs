@@ -22,3 +22,18 @@ export function routeTypes(db,r){const vs=db.visits.filter(v=>v.routeId===r.id).
 export function validateLocation(loc){if(loc==null)return;for(const [key,min,max] of [['lat',-90,90],['lng',-180,180]])if(typeof loc[key]!=='number'||!Number.isFinite(loc[key])||loc[key]<min||loc[key]>max)throw Error('Ubicación inválida.');if(loc.accuracy!==null&&loc.accuracy!==undefined&&(typeof loc.accuracy!=='number'||!Number.isFinite(loc.accuracy)||loc.accuracy<0))throw Error('Precisión de ubicación inválida.');if(!['gps','manual'].includes(loc.source)||typeof loc.capturedAt!=='string'||!Number.isFinite(Date.parse(loc.capturedAt)))throw Error('Datos de ubicación inválidos.');}
 export const mapsURL=loc=>`https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}`;
 function validateTypedVisit(v){for(const l of v.lines)if(l.productId!==undefined&&!ALL_PRODUCTS.some(p=>p.id===l.productId))throw Error('Tipo de producto inválido.');for(const k of ['gifts','replacements','expired'])if(v[k+'ByType']!==undefined)validateTypes(v[k+'ByType'],v[k]);validateLocation(v.location);}
+
+export function routeDeletionInfo(db,routeId){
+ const route=db.routes.find(r=>r.id===routeId);if(!route)throw Error('La ruta ya no existe.');
+ const visits=db.visits.filter(v=>v.routeId===routeId),visitIds=new Set(visits.map(v=>v.id));
+ const receipts=db.receipts.filter(r=>r.routeId===routeId),expenses=db.expenses.filter(e=>e.routeId===routeId);
+ const linkedRouteIds=new Set(db.receipts.filter(r=>r.routeId!==routeId&&r.allocations.some(a=>visitIds.has(a.visitId))).map(r=>r.routeId));
+ const reopenedDebt=receipts.reduce((sum,r)=>sum+r.allocations.filter(a=>!visitIds.has(a.visitId)).reduce((s,a)=>s+a.amount,0),0);
+ return {route,visits:visits.length,photos:visits.reduce((s,v)=>s+v.photos.length,0),locations:visits.filter(v=>v.location).length,receipts:receipts.length,expenses:expenses.length,reopenedDebt,linkedRoutes:db.routes.filter(r=>linkedRouteIds.has(r.id))};
+}
+export function deleteRoute(db,routeId){
+ const info=routeDeletionInfo(db,routeId);
+ if(info.linkedRoutes.length)throw Error('Esta ruta tiene cobros registrados en otras rutas. Elimina primero las rutas con esos cobros para conservar las cuentas.');
+ const next={...db};for(const key of ['visits','receipts','expenses'])next[key]=db[key].filter(x=>x.routeId!==routeId);next.routes=db.routes.filter(r=>r.id!==routeId);
+ validateDB(next);Object.assign(db,next);return info;
+}

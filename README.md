@@ -131,3 +131,9 @@ Al iniciar o recargar una ruta, cuenta las fundas de quinoa de sal, dulce, choco
 El GPS requiere HTTPS (GitHub Pages) o localhost y permiso del navegador. Sin permiso puedes elegir una tienda. Los formularios, fotos, cantidades y coordenadas se guardan localmente y funcionan sin conexión después de preparar la app; el mapa de calles necesita internet. Leaflet 1.9.4 se carga desde unpkg con integridad SRI únicamente al abrir un mapa. Los mapas usan OpenStreetMap con atribución visible y sin descarga masiva ni caché de mapas en el service worker.
 
 El Excel añade Entregas por tipo, Inventario por tipo y coordenadas/enlaces de ubicación en Visitas. Las copias JSON incluyen también productos y ubicaciones y aceptan copias de la versión anterior.
+
+## Eliminar rutas de prueba
+
+En Ruta, pulsa «Eliminar ruta» y confirma. Puedes borrar rutas abiertas o cerradas. Para una ruta anterior, abre su resumen desde Rutas anteriores. Se borran la ruta, sus cargas/recargas/cierre, visitas, fotografías, puntos del mapa, cobros y gastos; las tiendas y las demás rutas se conservan. La confirmación muestra los registros afectados y ofrece descargar una copia.
+
+Si la ruta cobró deudas de rutas anteriores, esas deudas vuelven a estar pendientes. Si sus ventas tienen cobros registrados en otras rutas, la app muestra esas rutas y pide eliminarlas primero para evitar cobros sin una venta vinculada.

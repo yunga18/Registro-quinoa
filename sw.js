@@ -1,4 +1,4 @@
-const VERSION='ceb92ba2d6bfb04d';
+const VERSION='7a1e71fb850c31d2';
 const BASE=new URL('./',self.location.href);
 const PREFIX='quinua-ruta-'+encodeURIComponent(BASE.pathname)+'-';
 const CACHE=PREFIX+VERSION;
